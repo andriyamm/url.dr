@@ -1,0 +1,4 @@
+name = url_shortener
+description = Url shortener
+package = Oz modules
+core = 7.x

@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function url_shortener_schema() {
+  $schema = array();
+
+  $schema['urls'] = array(
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'url' => array(
+        'type' => 'varchar',
+        'length' => 250,
+        'not null' => TRUE,
+      ),
+      'short_url' => array(
+        'type' => 'varchar',
+        'length' => 5,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function url_shortener_install() {
+  //drupal_install_schema('url_shortener');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function url_shortener_uninstall() {
+  drupal_uninstall_schema('url_shortener');
+}
