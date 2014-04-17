@@ -63,7 +63,7 @@ function _url_shortener_insert_after_first_element(&$a, $element) {
 function url_shortener_boot() {
   // get query parametrs and check if it is not a short url ???
   if (isset($_GET['q'])) {
-    $row = db_query("SELECT url FROM {urls} WHERE  short_url = :q", array(':q' => $_GET['q']))->fetchObject();
+    $row = db_query("SELECT url, id FROM {urls} WHERE  short_url = :q", array(':q' => $_GET['q']))->fetchObject();
     if ($row) {
       _url_shortener_goto($row);
     }
@@ -95,6 +95,13 @@ function _url_shortener_goto($row) {
   session_write_close();
 
   header('Location: ' . $url, TRUE, 301);
+
+  // header has been sent... browser has been redirected
+  // now we can do any expensive operations
+
+  // update access information on this row
+  db_query('UPDATE {urls} SET count = count + 1, last_used = :time WHERE rid = :rid', array('time' => time(), 'id' => $row->id));
+
 
   // The "Location" header sends a redirect status code to the HTTP daemon. In
   // some cases this can be wrong, so we make sure none of the code below the
