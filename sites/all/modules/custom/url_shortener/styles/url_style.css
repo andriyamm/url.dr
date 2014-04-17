@@ -1,0 +1,59 @@
+#wraper {
+  width: 400px;
+  margin: 0 auto;
+  padding: 70px 0 0;
+  font-family: sans-serif;
+
+    min-height: 90%;
+    /* equal to footer height */
+    margin-bottom: -22px;
+}
+
+#wraper h1#the_logo {
+  text-align: center;
+  margin: 0;
+  padding: 0 0 25px;
+}
+    
+#wraper h1#the_logo img {
+  max-width: 250px;
+}
+  
+#wraper h2.title {
+    margin: 0;
+    padding: 0 0 15px;
+    font-size: 2em;
+}
+
+#wraper input[type="text"] {
+    width: 360px;
+    border: 1px #ccc solid;
+    border-radius: 3px;
+    padding: 5px;
+    font-size: 15px;
+}
+
+#wraper input[type="submit"] {
+    float: right;
+}
+
+#wraper #middle_part {
+    border-radius: 3px;
+    background: #fff;
+    padding: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 3px 1px #ccc;
+}
+
+div#bottom, div#header {
+    border-top: 1px solid #e3e3e3;
+}
+
+#wrapper:after {
+    content: "";
+    display: block;
+}
+div#bottom, #wrapper:after {
+    /* .push must be the same height as footer */
+    height: 42px;
+}
