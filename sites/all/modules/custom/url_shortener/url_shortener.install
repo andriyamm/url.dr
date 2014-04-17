@@ -9,19 +9,49 @@ function url_shortener_schema() {
   $schema['urls'] = array(
     'fields' => array(
       'id' => array(
+        'description' => t('unique id '),
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
       'url' => array(
+        'description' => t('full url'),
         'type' => 'varchar',
         'length' => 250,
         'not null' => TRUE,
       ),
       'short_url' => array(
+        'description' => t('short url '),
         'type' => 'varchar',
         'length' => 5,
         'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => t('user id of creator'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'count' => array(
+        'description' => t('usage count'),
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'created' => array(
+        'description' => t('timestamp of creation'),
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'last_used' => array(
+        'description' => t('timestamp of last use'),
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'active' => array(
+        'description' => t('allows links to be deactivated'),
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
       ),
     ),
     'primary key' => array('id'),
