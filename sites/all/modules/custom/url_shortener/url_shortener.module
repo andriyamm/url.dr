@@ -16,3 +16,48 @@ function url_shortener_menu() {
 
   return $items;
 }
+
+/**
+ * Implements hook_boot().
+ */
+function url_shortener_boot() {
+  // get query parametrs and check if it is not a short url ???
+  if (isset($_GET['q'])) {
+    $row = db_query("SELECT url FROM {urls} WHERE  short_url = :q", array(':q' => $_GET['q']))->fetchObject();
+    if ($row) {
+      _url_shortener_goto($row);
+    }
+  }
+}
+
+/**
+ * A heavily modified version of drupal_goto() (which hasn't been bootstrapped during hook_boot()
+ */
+function _url_shortener_goto($row) {
+  if (!$row || (isset($_GET['redirect']) && $_GET['redirect'] == 'false')) {
+    return;
+  }
+
+  $url = $row->url;
+
+  // Remove newlines from the URL to avoid header injection attacks.
+  $url = str_replace(array("\n", "\r"), '', $url);
+
+  // We do not want this while running update.php.
+  if (!defined('MAINTENANCE_MODE') || MAINTENANCE_MODE != 'update') {
+
+    // Allow modules to react to the end of the page request before redirecting.
+    module_invoke_all('exit', $url);
+  }
+
+  // Even though session_write_close() is registered as a shutdown function, we
+  // need all session data written to the database before redirecting.
+  session_write_close();
+
+  header('Location: ' . $url, TRUE, 301);
+
+  // The "Location" header sends a redirect status code to the HTTP daemon. In
+  // some cases this can be wrong, so we make sure none of the code below the
+  // drupal_goto() call gets executed upon redirection.
+  exit();
+}
