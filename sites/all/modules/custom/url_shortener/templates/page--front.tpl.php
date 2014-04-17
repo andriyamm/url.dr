@@ -1,7 +1,5 @@
 
-  <div id="header">
-
-
+  <div id="top">
     <?php print theme(
       'links__system_main_menu',
       array(
@@ -11,12 +9,10 @@
           'class' => array(
             'links',
             'inline',
-            'clearfix'
           )
         ),
       )
     ); ?>
-
   </div>
 
 
@@ -26,7 +22,6 @@
         <img src="<?php print $logo; ?>" alt="<?php print $site_name; ?>">
       </h1>
     </div>
-
 
     <div id="middle_part">
       <h2 class="title"><?php print $title; ?></h2>
@@ -38,5 +33,6 @@
   </div>
 
   <div id="bottom">
-    Powered by Drupal <?php print date('Y');?>
+
+    <div><?php print 'Powered by '.l('Drupal', 'http://drupal.org', array('attributes' => array('target' => '_blank') )); ?> |<?php print date('Y');?></div>
   </div>

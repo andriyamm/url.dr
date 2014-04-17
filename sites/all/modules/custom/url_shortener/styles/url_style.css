@@ -3,10 +3,6 @@
   margin: 0 auto;
   padding: 70px 0 0;
   font-family: sans-serif;
-
-    min-height: 90%;
-    /* equal to footer height */
-    margin-bottom: -22px;
 }
 
 #wraper h1#the_logo {
@@ -45,15 +41,27 @@
     box-shadow: 0 0 3px 1px #ccc;
 }
 
-div#bottom, div#header {
-    border-top: 1px solid #e3e3e3;
+div#top {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: helvetica, arial, sans-serif;
+    border-bottom: 1px solid #e3e3e3;
+    height: 40px;
+}
+div#top ul {
+    float: right;
+    margin-right: 30px;
 }
 
-#wrapper:after {
-    content: "";
-    display: block;
+div#bottom {
+    border-top: 1px solid #e3e3e3;
+    height: 40px;
+    position:absolute;
+    bottom:0;
+    width: 100%;
 }
-div#bottom, #wrapper:after {
-    /* .push must be the same height as footer */
-    height: 42px;
+
+div#bottom div{
+    margin: auto;
+    width: 200px;
 }
