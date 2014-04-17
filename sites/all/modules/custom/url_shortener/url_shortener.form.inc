@@ -8,7 +8,7 @@ function url_shortener_form($form, &$form_state) {
 
   $form['url'] = array(
     '#type' => 'textfield',
-    '#title' => t('EUrl'),
+    '#title' => t('Enter Url'),
     '#required' => TRUE,
   );
 
@@ -26,6 +26,7 @@ function url_shortener_form_validate(&$form, &$form_state) {
 }
 
 function url_shortener_form_submit($form, &$form_state) {
+  global $base_url;
 
   $url = $form_state['values']['url'];
 
@@ -37,28 +38,23 @@ function url_shortener_form_submit($form, &$form_state) {
   )
   ->fetchField();
 
-  if($res) {
-    drupal_set_message(t('Your url: @short_url', array('@short_url' => $res)));
-    //return $res;
-  }
-  else {
-    $short_url = _url_shortener_generate();
+  if(!$res) {
+    $res = _url_shortener_generate();
     db_insert('urls')
       ->fields(
         array(
           'url' => $url,
-          'short_url' => $short_url,
+          'short_url' => $res,
         )
       )
       ->execute();
-    drupal_set_message(t('Your url: @short_url', array('@short_url' => $short_url)));
-    //return $short_url;
   }
-
+  $link = $base_url . '/' . $res;
+  drupal_set_message(t('Your url: ') . l($link, $link, array('attributes' => array('target' => '_blank') ) ) );
 }
 
 function _url_shortener_generate() {
-  $short_url = base_convert(rand(10000,99999), 10, 36);
+  $short_url = base_convert(rand(10000, 99999), 10, 36);
 
   $res = db_query(
     'SELECT id FROM {urls} WHERE short_url=:short_url LIMIT 1',
